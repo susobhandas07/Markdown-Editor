@@ -2,7 +2,12 @@ import { FiTrash2 } from "react-icons/fi";
 import { TbDeviceFloppy } from "react-icons/tb";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiOutlineFile } from "react-icons/ai";
-export default function main() {
+interface Props {
+    fileName: string,
+    files: string[],
+    handeler: Function
+}
+export default function main({ fileName, files, handeler }: Props) {
     return (
         <header
             className="flex items-center py-2"
@@ -21,14 +26,16 @@ export default function main() {
 
             <AiOutlineFile className="mx-1" style={{ fontSize: "1.3em" }} />
 
-            <section className="mx-1">
+            <section className="mx-1" >
                 <p
                     className="capitalize"
                     style={{ fontSize: "0.7em", marginBottom: "-7px" }}
                 >
                     dcoument name
                 </p>
-                <span className="p-0 font-medium">welcome.md</span>
+                <select className="bg-transparent mt-1" value={fileName} name="key" onChange={(e) => handeler(e)}>
+                    {files.map((fileName) => <option className="p-0 font-medium" value={fileName}>{fileName}.md</option>)}
+                </select>
             </section>
             <button
                 className="animate-morph cursor-pointer mx-4"

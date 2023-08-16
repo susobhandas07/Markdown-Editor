@@ -8,6 +8,7 @@ export default function main({ child, handeler }: Props) {
             style={{ height: "93vh", backgroundColor: "var(--bg-display-name)" }}>
             <h5 className="tracking-widest uppercase px-5 my-1">Input</h5>
             <textarea
+                name="content"
                 className="w-full h-full resize-none p-2 outline-none"
                 style={{ backgroundColor: "var(--bg-textarea)" }}
                 value={child !== null ? child : ""}

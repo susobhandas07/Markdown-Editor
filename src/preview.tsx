@@ -11,7 +11,7 @@ export default function main({ data }: Props) {
                 className="w-full h-full p-2"
                 style={{ backgroundColor: "var(--bg-textarea)" }}
             >
-                <ReactMarkdown>{data as string}</ReactMarkdown>
+                <ReactMarkdown children={data as string} />
             </section>
         </div>
     );

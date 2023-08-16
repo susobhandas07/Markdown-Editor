@@ -33,8 +33,8 @@
         content: '';
         position: absolute;
         width: 60px;
-        height: 45px;
-        top: -8px;
+        height: 46px;
+        top: -9px;
         left: -15px;
         background-color: rgb(130, 131, 138);
         z-index: -1;
