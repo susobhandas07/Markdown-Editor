@@ -1,0 +1,54 @@
+:root {
+    --bg-textarea: rgb(240, 240, 240);
+    --bg-display-name: rgb(221, 221, 221);
+    --bg-header: rgb(201, 201, 201);
+}
+
+
+.bg-textarea {
+    background-color: rgb(237, 240, 243);
+}
+
+@keyframes morph {
+
+    0%,
+    100% {
+        font-size: 1em;
+    }
+
+    50% {
+        font-size: 0.9em;
+    }
+}
+
+.animate-morph:active {
+    animation: morph 0.1s 1;
+}
+
+#hamburger-menue {
+    z-index: 1;
+
+    &::after {
+
+        content: '';
+        position: absolute;
+        width: 60px;
+        height: 45px;
+        top: -8px;
+        left: -15px;
+        background-color: rgb(130, 131, 138);
+        z-index: -1;
+    }
+}
+
+@media(prefers-color-scheme:dark) {
+    :root {
+        --bg-textarea: rgb(12, 12, 14);
+        --bg-display-name: rgb(27, 27, 27);
+        --bg-header: rgb(41, 41, 41);
+    }
+
+    #hamburger-menue::after {
+        background-color: rgb(90, 90, 90);
+    }
+}
