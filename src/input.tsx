@@ -1,5 +1,5 @@
 interface Props {
-    child: string | undefined,
+    child: string | null,
     handeler: Function,
 }
 export default function main({ child, handeler }: Props) {
@@ -11,8 +11,8 @@ export default function main({ child, handeler }: Props) {
                 name="content"
                 className="w-full h-full resize-none p-2 outline-none"
                 style={{ backgroundColor: "var(--bg-textarea)" }}
-                value={child !== null ? child : ""}
-                onChange={(e) => handeler(e)} />
+                value={child ?? ""}
+                onChange={(e) => handeler({ type: "updateNote", payLoad: e.target.value })} />
         </div>
     );
 }

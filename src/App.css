@@ -41,6 +41,17 @@
     }
 }
 
+.focus-ring {
+    outline: 2px solid rgb(85, 138, 236);
+    outline-offset: 4px;
+
+    &:focus {
+        outline: 2px solid rgb(85, 138, 236);
+        outline-offset: 4px;
+    }
+
+}
+
 @media(prefers-color-scheme:dark) {
     :root {
         --bg-textarea: rgb(12, 12, 14);

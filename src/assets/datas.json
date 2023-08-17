@@ -1,12 +1,14 @@
 [
     {
         "name": "hello",
-        "content": "hello world",
-        "markedForDelete": false
+        "content": "hello world"
     },
     {
         "name": "helo2",
-        "content": "# helo 2nd time",
-        "markedForDelete": false
+        "content": "# helo 2nd time"
+    },
+    {
+        "name": "helo3",
+        "content": "let's try this --- "
     }
 ]

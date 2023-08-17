@@ -1,6 +1,6 @@
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 interface Props {
-    data: String,
+    data: String | null,
 }
 export default function main({ data }: Props) {
     return (
@@ -11,7 +11,7 @@ export default function main({ data }: Props) {
                 className="w-full h-full p-2"
                 style={{ backgroundColor: "var(--bg-textarea)" }}
             >
-                <ReactMarkdown children={data as string} />
+                <ReactMarkdown children={data as string ?? ""} />
             </section>
         </div>
     );

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useReducer } from 'react'
 import Header from './header.tsx';
 import Input from './input.tsx';
 import Preview from './preview.tsx';
@@ -6,33 +6,66 @@ import datas from './assets/datas.json';
 import './App.css'
 
 
-function App() {
-  const [files, setFiles] = useState(datas || []);
-  const [key, setkey] = useState(files[0] && files[0].name);
+interface File {
+  "name": string,
+  "content": string | null,
+}
+interface State {
+  notes: File[],
+  key: string
+}
+interface Action {
+  type: string,
+  payLoad: string | null
+}
 
-  function findNote() {
-    for (let i in files) {
-      if (files[i].name === key) {
-        return files[i].content;
+function App() {
+
+  const initialState: State = {
+    notes: datas,
+    key: datas[0].name
+  }
+
+  const findNote = () => {
+    for (let note of state.notes) {
+      if (note.name === state.key) {
+        return note.content;
       }
     }
     return "";
   }
-  function updateChange(e: any) {
-    const { name, value } = e.target;
-    if (name === 'content') {
-      setFiles((prevState) => prevState.map((file) => file.name === key ? { ...file, content: value } : file));
-    } else if (name === 'key') {
-      setkey(value);
+
+
+  function reducer(state: State, action: Action): State {
+    switch (action.type) {
+      case "updateNote":
+        return { ...state, notes: state.notes.map((item: File) => item.name === state.key ? { ...item, content: action.payLoad } : item) };
+      case "updateKey":
+        return { ...state, key: action.payLoad ?? state.key };
+      case "newNote":
+        return { ...state, notes: [...state.notes, { "name": action.payLoad ?? "", "content": "" }] };
+      case "deleteNote":
+        let index: string = "", i = 0;
+        while (i < state.notes.length) {
+          if (state.notes[i].name != action.payLoad) {
+            index = state.notes[i].name;
+            break;
+          }
+          i++;
+        }
+        return { ...state, key: index, notes: state.notes.filter((note: File) => note.name != action.payLoad) };
+      default:
+        return state;
     }
   }
 
+  const [state, setState] = useReducer(reducer, initialState);
   return (
     <>
-      <Header fileName={key} files={files.map((item) => item.name)} handeler={updateChange} />
+      <Header fileName={state.key} files={state.notes.map((item) => item.name)} handeler={setState} />
       <div
         className='flex'>
-        <Input child={findNote()} handeler={updateChange} />
+        <Input child={findNote()} handeler={setState} />
         <Preview data={findNote()} />
       </div>
     </>
