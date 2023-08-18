@@ -20,6 +20,15 @@ export default function main({ fileName, files, handeler }: Props) {
         }
     };
 
+    const closeAndClearModal = () => {
+        if (modalInput.current) {
+            modalInput.current.value = "";
+        }
+        if (modal.current) {
+            modal.current.close();
+        }
+    };
+
     const searchFile = (name: string): boolean => {
         for (let f of files) {
             if (f === name) {
@@ -63,10 +72,8 @@ export default function main({ fileName, files, handeler }: Props) {
         } else {
             //valid name
             if (!searchFile(newFileName)) {
-                modal.current && modal.current.close();
+                closeAndClearModal();
                 handeler({ type: "newNote", payLoad: newFileName });
-                handeler({ type: "updateKey", payLoad: newFileName });
-                if (modalInput.current) modalInput.current.value = "";
             } else {
                 alert("File already exists!");
             }
@@ -76,14 +83,11 @@ export default function main({ fileName, files, handeler }: Props) {
     const delete_file = () => {
         if (!searchFile(fileName)) {
             alert("Sorry! error occured.78");
-        } else if (files.length === 1) {
-            alert("Cannot delete file! to be fixed");
         }
         else {
             handeler({ type: "deleteNote", payLoad: fileName });
         }
     }
-
     return (
         <header
             className="flex items-center py-2"
@@ -120,6 +124,7 @@ export default function main({ fileName, files, handeler }: Props) {
 
             <dialog
                 className="px-7 py-5 rounded  text-current"
+                id="modal"
                 style={{ backgroundColor: "var(--bg-header)" }}
                 ref={modal}
             >
