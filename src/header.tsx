@@ -90,7 +90,7 @@ export default function main({ fileName, files, handeler }: Props) {
     }
     return (
         <header
-            className="flex items-center py-2"
+            className="flex items-center py-2 sticky top-0"
             style={{ backgroundColor: "var(--bg-header)" }}
         >
             <button
@@ -102,11 +102,11 @@ export default function main({ fileName, files, handeler }: Props) {
                 <RxHamburgerMenu />
             </button>
 
-            <h4 className="mx-6 pr-6 uppercase font-medium tracking-widest border-black border-r dark:border-gray-600">markdown</h4>
+            <h4 className=" hidden md:block mx-6 pr-6 uppercase font-medium tracking-widest border-black border-r dark:border-gray-600">markdown</h4>
 
-            <AiOutlineFile className="mx-1" style={{ fontSize: "1.3em" }} />
+            <AiOutlineFile className="hidden md:block mx-6 md:mx-1" style={{ fontSize: "1.3em" }} />
 
-            <section className="mx-1" >
+            <section className="mx-4 md:mx-1" >
                 <p
                     className="capitalize"
                     style={{ fontSize: "0.7em", marginBottom: "-7px" }}
@@ -118,7 +118,7 @@ export default function main({ fileName, files, handeler }: Props) {
                 </select>
             </section>
 
-            <button className="mx-1 text-xl animate-morph" id="open-modal" onClick={() => { if (modal.current) { openModal(); } }}>
+            <button className="md:mx-1 text-xl animate-morph" id="open-modal" onClick={() => { if (modal.current) { openModal(); } }}>
                 <AiFillFileAdd />
             </button>
 
@@ -145,13 +145,13 @@ export default function main({ fileName, files, handeler }: Props) {
                     ok
                 </button>
 
-                <button className="float-right mx-2 rounded px-4 py-2 capitalize"
+                <button className="float-right mx-2 rounded px-4 py-2 capitalize animate-morph"
                     style={{ backgroundColor: "var(--bg-textarea)" }}
                     onClick={() => { if (modal.current) modal.current.close() }}>cancel</button>
             </dialog>
 
             <button
-                className="animate-morph cursor-pointer mx-4 ml-auto"
+                className="animate-morph cursor-pointer mx-2 ml-auto"
                 style={{ fontSize: "1.2em" }}
                 onClick={() => { delete_file() }}
             >
@@ -159,11 +159,11 @@ export default function main({ fileName, files, handeler }: Props) {
             </button>
 
             <button
-                className="bg-red-600 mx-4 flex items-center gap-2 px-2 rounded py-1 capitalize animate-morph cursor-pointer text-white"
+                className="bg-red-600 mr-3 md:mx-4 flex items-center gap-2 px-2 rounded py-1 capitalize animate-morph cursor-pointer text-white"
                 disabled={true}
             >
                 <TbDeviceFloppy style={{ fontSize: "1.2em" }} />
-                save changes
+                <p className="hidden md:inline">save changes</p>
             </button>
 
         </header>

@@ -13,11 +13,11 @@
 
     0%,
     100% {
-        font-size: 1em;
+        transform: scale(1);
     }
 
     50% {
-        font-size: 0.9em;
+        transform: scale(0.9);
     }
 }
 

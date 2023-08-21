@@ -17,10 +17,10 @@ export default function main() {
     return (
         <div className="py-1 grid place-items-center"
             style={{ height: "93vh", backgroundColor: "var(--bg-display-name)" }}>
-            <section className="w-1/4 flex items-center justify-around">
+            <section className="w-48 text-center">
                 <h4 className="capitalize">No note found</h4>
                 <button
-                    className="mx-1 animate-morph capitalize flex items-center justify-around bg-blue-500 px-3 py-2 rounded text-white"
+                    className="mx-auto animate-morph capitalize flex items-center justify-around bg-blue-500 w-full h-12 rounded-md text-white"
                     ref={ref}
                 >
                     <BsFillPlusCircleFill size={20} className="mr-2" />  create new file

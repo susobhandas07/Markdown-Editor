@@ -1,10 +1,11 @@
-import { useReducer } from 'react'
+import { useReducer, useState } from 'react'
 import BlankPage from './BlankPage.tsx';
 import Header from './header.tsx';
 import Input from './input.tsx';
 import Preview from './preview.tsx';
 import datas from './assets/datas.json';
 import './App.css'
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 
 interface File {
@@ -63,16 +64,37 @@ function App() {
   }
 
   const [state, setState] = useReducer(reducer, initialState);
+  const [display, setDisplay] = useState<boolean>(false);
+
+  const toggleDisplay = () => {
+    setDisplay(prevState => !prevState);
+  }
+
   return (
     <>
       <Header fileName={state.key} files={state.notes.map((item) => item.name)} handeler={setState} />
       {state.notes.length > 0
         ? <div
-          className='flex'>
-          <Input child={findNote()} handeler={setState} />
-          <Preview data={findNote()} />
-        </div>
-        : <BlankPage />}
+          className='md:flex overflow-hidden gap-1'
+          style={{ height: "92.9vh", backgroundColor: "var(--bg-header)" }}>
+          <section className='md:hidden flex justify-between items-center px-5'
+            style={{ backgroundColor: "var(--bg-display-name)" }}>
+            <h5 className="md:hidden tracking-widest uppercase mt-2">{display ? "Preview" : "Input"}</h5>
+            <button className="animate-morph" onClick={toggleDisplay}>
+              {display
+                ? <AiOutlineEyeInvisible />
+                : <AiOutlineEye />}
+            </button>
+          </section>
+          {display
+            ? <Preview className="md:hidden" data={findNote()} />
+            : <Input className="md:hidden" child={findNote()} handeler={setState} />
+          }
+          <Input className="hidden md:block" child={findNote()} handeler={setState} />
+          <Preview className="hidden md:block" data={findNote()} />
+        </div >
+        : <BlankPage />
+      }
     </>
   )
 }
