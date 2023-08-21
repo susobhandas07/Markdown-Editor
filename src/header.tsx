@@ -2,7 +2,8 @@ import { FiTrash2 } from "react-icons/fi";
 import { TbDeviceFloppy } from "react-icons/tb";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiOutlineFile, AiFillFileAdd } from "react-icons/ai";
-import { useRef } from "react";
+import { Menue } from "./Menue.tsx";
+import { useRef, useState } from "react";
 
 interface Props {
     fileName: string,
@@ -13,6 +14,11 @@ interface Props {
 export default function main({ fileName, files, handeler }: Props) {
     const modal = useRef<HTMLDialogElement | null>(null);
     const modalInput = useRef<HTMLInputElement | null>(null);
+    const [menueVisible, setMenueVisibility] = useState(false);
+
+    const toggleMenue = () => {
+        setMenueVisibility(prevState => !prevState);
+    }
 
     const openModal = () => {
         if (modal.current) {
@@ -88,25 +94,41 @@ export default function main({ fileName, files, handeler }: Props) {
             handeler({ type: "deleteNote", payLoad: fileName });
         }
     }
+
     return (
         <header
-            className="flex items-center py-2 sticky top-0"
-            style={{ backgroundColor: "var(--bg-header)" }}
+            className="flex items-center bg-header"
         >
+            <Menue
+                visible={menueVisible}
+                handeler={toggleMenue}
+            >
+                <section className="grid place-items-center mt-5" >
+                    {files.map((fName) =>
+                        <section key={fName} className="bg-gray-400 dark:bg-gray-700 w-full  text-center mb-1 rounded-md">
+                            <input type="radio" className="hidden" checked={fName === fileName} value={fName} id={fName} name="file" onChange={(e) => handeler({ type: "updateKey", payLoad: e.target.value })} />
+                            <label className="block my-1" htmlFor={fName}>{fName}.md</label>
+                        </section>
+                    )}
+                    <button className="w-full px-3 py-2 rounded-md bg-blue-500 text-white" onClick={openModal}>creat new</button>
+                </section>
+            </Menue>
             <button
-                className="mx-4 animate-morph cursor-pointer relative"
+                className="md:hidden px-4 py-2 animate-morph cursor-pointer relative"
                 id="hamburger-menue"
                 style={{ fontSize: "2em" }}
-                disabled={true}
+                onClick={toggleMenue}
             >
                 <RxHamburgerMenu />
             </button>
 
             <h4 className=" hidden md:block mx-6 pr-6 uppercase font-medium tracking-widest border-black border-r dark:border-gray-600">markdown</h4>
 
-            <AiOutlineFile className="hidden md:block mx-6 md:mx-1" style={{ fontSize: "1.3em" }} />
+            <AiOutlineFile className="mx-6 md:mx-1" style={{ fontSize: "1.3em" }} />
 
-            <section className="mx-4 md:mx-1" >
+            <p className="md:hidden">{fileName}.md</p>
+
+            <section className="hidden md:block mx-4 md:mx-1" >
                 <p
                     className="capitalize"
                     style={{ fontSize: "0.7em", marginBottom: "-7px" }}
@@ -118,7 +140,7 @@ export default function main({ fileName, files, handeler }: Props) {
                 </select>
             </section>
 
-            <button className="md:mx-1 text-xl animate-morph" id="open-modal" onClick={() => { if (modal.current) { openModal(); } }}>
+            <button className="hidden md:block md:mx-1 text-xl animate-morph" id="open-modal" onClick={openModal}>
                 <AiFillFileAdd />
             </button>
 
@@ -159,7 +181,7 @@ export default function main({ fileName, files, handeler }: Props) {
             </button>
 
             <button
-                className="bg-red-600 mr-3 md:mx-4 flex items-center gap-2 px-2 rounded py-1 capitalize animate-morph cursor-pointer text-white"
+                className="bg-red-600 mr-3 md:mx-4 my-2 flex items-center gap-2 px-2 rounded py-1 capitalize animate-morph cursor-pointer text-white"
                 disabled={true}
             >
                 <TbDeviceFloppy style={{ fontSize: "1.2em" }} />

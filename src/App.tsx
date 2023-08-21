@@ -75,8 +75,8 @@ function App() {
       <Header fileName={state.key} files={state.notes.map((item) => item.name)} handeler={setState} />
       {state.notes.length > 0
         ? <div
-          className='md:flex overflow-hidden gap-1'
-          style={{ height: "92.9vh", backgroundColor: "var(--bg-header)" }}>
+          className='md:flex gap-1 bg-header'
+          style={{ height: "92.5vh" }}>
           <section className='md:hidden flex justify-between items-center px-5'
             style={{ backgroundColor: "var(--bg-display-name)" }}>
             <h5 className="md:hidden tracking-widest uppercase mt-2">{display ? "Preview" : "Input"}</h5>

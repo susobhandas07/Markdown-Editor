@@ -19,6 +19,14 @@
 
 }
 
+html {
+  background-color: var(--bg-textarea);
+}
+
+#root {
+  overflow-y: hidden;
+}
+
 .bg-white {
   background-color: rgb(219, 218, 218);
 }

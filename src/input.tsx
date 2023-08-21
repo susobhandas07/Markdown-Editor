@@ -11,8 +11,8 @@ export default function main({ child, handeler, className = "" }: Props) {
             <h5 className=" hidden md:block tracking-widest uppercase my-1 px-5">Input</h5>
             <textarea
                 name="content"
-                className="w-full h-full resize-none p-2 outline-none"
-                style={{ backgroundColor: "var(--bg-textarea)" }}
+                className="w-full resize-none p-2 outline-none"
+                style={{ backgroundColor: "var(--bg-textarea)", height: "95%" }}
                 value={child ?? ""}
                 onChange={(e) => handeler({ type: "updateNote", payLoad: e.target.value })} />
         </div>

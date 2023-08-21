@@ -10,8 +10,8 @@ export default function main({ data, className = "" }: Props) {
             style={{ height: "100%", backgroundColor: "var(--bg-display-name)" }}>
             <h5 className="hidden md:block tracking-widest uppercase px-5 my-1">Preview</h5>
             <section
-                className="w-full h-full p-2"
-                style={{ backgroundColor: "var(--bg-textarea)" }}
+                className="w-full p-2"
+                style={{ backgroundColor: "var(--bg-textarea)", height: "95%" }}
             >
                 <ReactMarkdown children={data as string ?? ""} />
             </section>
