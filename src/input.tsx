@@ -4,15 +4,15 @@ interface Props {
     className: String | null,
 }
 export default function main({ child, handeler, className = "" }: Props) {
-    const classes = `md:w-6/12 py-1 border-gray-400 dark:border-gray-700 ${className}`
+    const classes = `md:w-6/12 py-1 ${className}`
     return (
         <div className={classes}
-            style={{ height: "100%", backgroundColor: "var(--bg-display-name)" }}>
+            style={{ backgroundColor: "var(--bg-display-name)" }}>
             <h5 className=" hidden md:block tracking-widest uppercase my-1 px-5">Input</h5>
             <textarea
                 name="content"
                 className="w-full resize-none p-2 outline-none"
-                style={{ backgroundColor: "var(--bg-textarea)", height: "95%" }}
+                style={{ backgroundColor: "var(--bg-textarea)", height: "95.3%", maxHeight: "95.3%" }}
                 value={child ?? ""}
                 onChange={(e) => handeler({ type: "updateNote", payLoad: e.target.value })} />
         </div>

@@ -76,7 +76,7 @@ function App() {
       {state.notes.length > 0
         ? <div
           className='md:flex gap-1 bg-header'
-          style={{ height: "92.5vh" }}>
+          style={{ height: "92vh" }}>
           <section className='md:hidden flex justify-between items-center px-5'
             style={{ backgroundColor: "var(--bg-display-name)" }}>
             <h5 className="md:hidden tracking-widest uppercase mt-2">{display ? "Preview" : "Input"}</h5>
@@ -87,8 +87,8 @@ function App() {
             </button>
           </section>
           {display
-            ? <Preview className="md:hidden" data={findNote()} />
-            : <Input className="md:hidden" child={findNote()} handeler={setState} />
+            ? <Preview className="md:hidden h-full" data={findNote()} />
+            : <Input className="md:hidden h-full" child={findNote()} handeler={setState} />
           }
           <Input className="hidden md:block" child={findNote()} handeler={setState} />
           <Preview className="hidden md:block" data={findNote()} />
