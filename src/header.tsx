@@ -8,10 +8,11 @@ import { useRef, useState } from "react";
 interface Props {
     fileName: string,
     files: string[],
-    handeler: Function
+    handeler: Function,
+    saveChanges: Function,
 }
 
-export default function main({ fileName, files, handeler }: Props) {
+export default function main({ fileName, files, handeler, saveChanges }: Props) {
     const modal = useRef<HTMLDialogElement | null>(null);
     const modalInput = useRef<HTMLInputElement | null>(null);
     const [menueVisible, setMenueVisibility] = useState(false);
@@ -103,15 +104,17 @@ export default function main({ fileName, files, handeler }: Props) {
                 visible={menueVisible}
                 handeler={toggleMenue}
             >
-                <section className="grid place-items-center mt-5" >
-                    {files.map((fName) =>
-                        <section key={fName} className="bg-gray-400 dark:bg-gray-700 w-full  text-center mb-1 rounded-md">
-                            <input type="radio" className="hidden" checked={fName === fileName} value={fName} id={fName} name="file" onChange={(e) => handeler({ type: "updateKey", payLoad: e.target.value })} />
-                            <label className="block my-1" htmlFor={fName}>{fName}.md</label>
-                        </section>
-                    )}
-                    <button className="w-full px-3 py-2 rounded-md bg-blue-500 text-white" onClick={openModal}>creat new</button>
-                </section>
+                <>
+                    <section className="grid place-items-center mt-5" >
+                        {files.map((fName) =>
+                            <section key={fName} className="bg-gray-400 dark:bg-gray-700 w-full  text-center mb-1 rounded-md">
+                                <input type="radio" className="hidden" checked={fName === fileName} value={fName} id={fName} name="file" onChange={(e) => handeler({ type: "updateKey", payLoad: e.target.value })} />
+                                <label className="block my-1" htmlFor={fName}>{fName}.md</label>
+                            </section>
+                        )}
+                    </section>
+                    <button className="w-full px-3 py-2 rounded-md bg-blue-500 text-white mt-auto" onClick={openModal}>creat new</button>
+                </>
             </Menue>
             <button
                 className="md:hidden px-4 py-2 animate-morph cursor-pointer relative"
@@ -126,28 +129,28 @@ export default function main({ fileName, files, handeler }: Props) {
 
             <AiOutlineFile className="mx-6 md:mx-1" style={{ fontSize: "1.3em" }} />
 
-            <p className="md:hidden">{fileName}.md</p>
+            <p className="md:hidden">{fileName ? `${fileName}.md` : ""}</p>
 
-            <section className="hidden md:block mx-4 md:mx-1" >
+            {files.length > 0 && <section className="hidden md:block mx-4 md:mx-1" >
                 <p
                     className="capitalize"
                     style={{ fontSize: "0.7em", marginBottom: "-7px" }}
                 >
                     dcoument name
                 </p>
-                <select className="bg-transparent mt-1" value={fileName} name="key" onChange={(e) => handeler({ type: "updateKey", payLoad: e.target.value })}>
-                    {files.map((fileName) => <option className="p-0 font-medium" key={fileName} value={fileName}>{fileName}.md</option>)}
+                <select className="bg-transparent mt-1" value={fileName ? fileName : ""} name="key" onChange={(e) => handeler({ type: "updateKey", payLoad: e.target.value })}>
+                    {files.map((fileName) => <option className="p-0 font-medium" key={fileName} value={fileName}>{fileName ? `${fileName}.md` : ""}</option>)}
                 </select>
-            </section>
+            </section>}
 
-            <button className="hidden md:block md:mx-1 text-xl animate-morph" id="open-modal" onClick={openModal}>
+            <button className="hidden md:block md:mx-1 text-xl animate-morph" id="open-modal" onClick={openModal} title="Create File">
                 <AiFillFileAdd />
             </button>
 
             <dialog
                 className="px-7 py-5 rounded  text-current"
                 id="modal"
-                style={{ backgroundColor: "var(--bg-header)" }}
+                style={{ backgroundColor: "var(--bg-header)", width: "min(90%,450px)" }}
                 ref={modal}
             >
                 <label htmlFor="new-file-name">Enter Name</label>
@@ -157,7 +160,7 @@ export default function main({ fileName, files, handeler }: Props) {
                     name="new-file-name"
                     type="text"
                     placeholder="example.md"
-                    className="block my-3 mb-6 w-96 rounded px-1 focus-ring"
+                    className="block my-3 mb-6 w-full rounded px-1 focus-ring"
                     style={{ backgroundColor: "var(--bg-display-name)", padding: "4px 5px" }}
                 />
 
@@ -176,13 +179,15 @@ export default function main({ fileName, files, handeler }: Props) {
                 className="animate-morph cursor-pointer mx-2 ml-auto"
                 style={{ fontSize: "1.2em" }}
                 onClick={() => { delete_file() }}
+                disabled={files.length <= 0}
+                title="Delete File"
             >
                 <FiTrash2 />
             </button>
 
             <button
                 className="bg-red-600 mr-3 md:mx-4 my-2 flex items-center gap-2 px-2 rounded py-1 capitalize animate-morph cursor-pointer text-white"
-                disabled={true}
+                onClick={() => { saveChanges(); }}
             >
                 <TbDeviceFloppy style={{ fontSize: "1.2em" }} />
                 <p className="hidden md:inline">save changes</p>

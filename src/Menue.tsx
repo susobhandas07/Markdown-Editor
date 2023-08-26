@@ -7,10 +7,10 @@ interface Props {
 }
 function Menue({ children, visible, handeler }: Props) {
     return (
-        <div className="md:hidden absolute top-0 z-10 w-72 h-screen text-right p-4"
-            style={{ backgroundColor: "var(--bg-header)", animation: "all 500ms", left: visible ? "0" : "-288px" }}
+        <div className="md:hidden absolute top-0 z-10 w-72 h-screen text-right p-4 flex flex-col"
+            style={{ backgroundColor: "var(--bg-header)", transitionDuration: "500ms", left: "-288px", transform: visible ? "translateX(288px)" : "" }}
         >
-            <button onClick={() => handeler()} className="px-5 py-2 rounded-md"><RxCross1 /></button>
+            <button onClick={() => handeler()} className="px-5 py-2 rounded-md self-end"><RxCross1 /></button>
             <h4 className="text-center">Files</h4>
             {children}
         </div>

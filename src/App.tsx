@@ -3,7 +3,6 @@ import BlankPage from './BlankPage.tsx';
 import Header from './header.tsx';
 import Input from './input.tsx';
 import Preview from './preview.tsx';
-import datas from './assets/datas.json';
 import './App.css'
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
@@ -22,10 +21,11 @@ interface Action {
 }
 
 function App() {
-
+  const localStorageKey = 'md-notes';
+  const storedNotes: File[] = JSON.parse(window.localStorage.getItem(localStorageKey) || "[]") || [];
   const initialState: State = {
-    notes: datas,
-    key: datas[0].name
+    notes: storedNotes,
+    key: storedNotes.length > 0 ? storedNotes[0].name : ""
   }
 
   const findNote = () => {
@@ -70,9 +70,13 @@ function App() {
     setDisplay(prevState => !prevState);
   }
 
+  const saveChanges = () => {
+    window.localStorage.setItem(localStorageKey, JSON.stringify(state.notes));
+  }
+
   return (
     <>
-      <Header fileName={state.key} files={state.notes.map((item) => item.name)} handeler={setState} />
+      <Header fileName={state.key} files={state.notes.map((item) => item.name)} handeler={setState} saveChanges={saveChanges} />
       {state.notes.length > 0
         ? <div
           className='md:flex gap-1 bg-header'
@@ -80,7 +84,7 @@ function App() {
           <section className='md:hidden flex justify-between items-center px-5'
             style={{ backgroundColor: "var(--bg-display-name)" }}>
             <h5 className="md:hidden tracking-widest uppercase mt-2">{display ? "Preview" : "Input"}</h5>
-            <button className="animate-morph" onClick={toggleDisplay}>
+            <button className="animate-morph" onClick={toggleDisplay} title='Preview'>
               {display
                 ? <AiOutlineEyeInvisible />
                 : <AiOutlineEye />}
