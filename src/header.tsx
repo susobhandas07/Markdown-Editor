@@ -162,6 +162,7 @@ export default function main({ fileName, files, handeler, saveChanges }: Props) 
                     placeholder="example.md"
                     className="block my-3 mb-6 w-full rounded px-1 focus-ring"
                     style={{ backgroundColor: "var(--bg-display-name)", padding: "4px 5px" }}
+                    onKeyDown={(e) => { if (e.code === "Enter") create_file(); }}
                 />
 
                 <button className="float-right bg-green-600 mx-2 px-4 py-2 rounded capitalize text-white animate-morph"

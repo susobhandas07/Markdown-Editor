@@ -3,7 +3,7 @@ import BlankPage from './BlankPage.tsx';
 import Header from './header.tsx';
 import Input from './input.tsx';
 import Preview from './preview.tsx';
-import './App.css'
+//import './App.css'
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 
