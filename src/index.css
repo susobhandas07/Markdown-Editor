@@ -132,6 +132,26 @@ button {
 
 }
 
+.response {
+  color: white;
+  font-weight: 500;
+  width: 0%;
+  height: 0%;
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  opacity: 0;
+  font-family: inherit;
+}
+
+#success {
+  background-color: green;
+}
+
+#failure {
+  background-color: red;
+}
+
 @media(prefers-color-scheme:dark) {
   :root {
     --bg-textarea: rgb(12, 12, 14);

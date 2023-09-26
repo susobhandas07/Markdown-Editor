@@ -1,9 +1,10 @@
 import { FiTrash2 } from "react-icons/fi";
 import { TbDeviceFloppy } from "react-icons/tb";
-import { RxHamburgerMenu } from "react-icons/rx";
+import { RxHamburgerMenu, RxCross2 } from "react-icons/rx";
 import { AiOutlineFile, AiFillFileAdd } from "react-icons/ai";
+import { BsCheckLg } from 'react-icons/bs';
 import { Menue } from "./Menue.tsx";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
     fileName: string,
@@ -68,6 +69,24 @@ export default function main({ fileName, files, handeler, saveChanges }: Props) 
     const alert = (message: string) => {
         window.alert(message);
     }
+    let successAnimation: Animation | undefined, failureAnimation: Animation | undefined;
+    useEffect(() => {
+        const success: HTMLElement | null = document.getElementById("success"), failure: HTMLElement | null = document.getElementById("failure");
+        const animationFrames = [
+            { width: "0%", height: "0%" },
+            { width: "100%", height: "100%", opacity: "1", offset: 0.2 },
+            { width: "100%", height: "100%", opacity: "1", offset: 0.8 },
+            { width: "100%", height: "100%", opacity: "0" },
+        ],
+            animationDuration: KeyframeAnimationOptions = {
+                duration: 2000,
+                fill: "forwards"
+            };
+        successAnimation = success?.animate(animationFrames, animationDuration);
+        failureAnimation = failure?.animate(animationFrames, animationDuration);
+        successAnimation?.pause();
+        failureAnimation?.pause();
+    }, []);
 
     //file create handeler
     const create_file = () => {
@@ -187,13 +206,19 @@ export default function main({ fileName, files, handeler, saveChanges }: Props) 
             </button>
 
             <button
-                className="bg-red-600 mr-3 md:mx-4 my-2 flex items-center gap-2 px-2 rounded py-1 capitalize animate-morph cursor-pointer text-white"
-                onClick={() => { saveChanges(); }}
+                className="bg-red-600 mr-3 md:mx-4 my-2 flex items-center gap-2 px-2 rounded py-1 capitalize animate-morph cursor-pointer text-white relative"
+                id="save-button"
+                onClick={() => {
+                    saveChanges()
+                        .then((result: boolean) => { console.log(result); result ? successAnimation?.play() : failureAnimation?.play(); })
+                        .catch((error: any) => { console.log(error); })
+                }}
             >
+                <section className="response flex items-center justify-center rounded" id="success"><BsCheckLg /><p className="hidden md:inline mx-1">Success!!</p></section>
+                <section className="response flex items-center justify-center rounded" id="failure"><RxCross2 /><p className="hidden md:inline mx-1">Failure!!</p></section>
                 <TbDeviceFloppy style={{ fontSize: "1.2em" }} />
                 <p className="hidden md:inline">save changes</p>
             </button>
-
         </header>
     );
 }

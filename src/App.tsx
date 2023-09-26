@@ -71,7 +71,14 @@ function App() {
   }
 
   const saveChanges = () => {
-    window.localStorage.setItem(localStorageKey, JSON.stringify(state.notes));
+    return new Promise((resolve, reject) => {
+      try {
+        window.localStorage.setItem(localStorageKey, JSON.stringify(state.notes));
+        resolve(true);
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
   return (
